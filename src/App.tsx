@@ -8,19 +8,31 @@ import HerbContradictionsPage from "@/pages/HerbContradictionsPage";
 import SeasonalHerbsPage from "@/pages/SeasonalHerbsPage";
 import HerbKnowledgePage from "@/pages/HerbKnowledgePage";
 import { useState, createContext, useEffect } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import { AuthContext } from '@/contexts/authContext';
 import { DiagnosisResult } from './lib/diagnosticEngine';
 
 // 创建诊断结果上下文
-export const DiagnosisContext = createContext({
-  faceImage: null as File | null,
-  tongueImage: null as File | null,
-  setFaceImage: (file: File | null) => {},
-  setTongueImage: (file: File | null) => {},
-  diagnosisResult: null as DiagnosisResult | null,
-  setDiagnosisResult: (result: DiagnosisResult | null) => {},
+interface DiagnosisContextType {
+  faceImage: File | null;
+  tongueImage: File | null;
+  setFaceImage: Dispatch<SetStateAction<File | null>>;
+  setTongueImage: Dispatch<SetStateAction<File | null>>;
+  diagnosisResult: DiagnosisResult | null;
+  setDiagnosisResult: Dispatch<SetStateAction<DiagnosisResult | null>>;
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+}
+
+export const DiagnosisContext = createContext<DiagnosisContextType>({
+  faceImage: null,
+  tongueImage: null,
+  setFaceImage: () => {},
+  setTongueImage: () => {},
+  diagnosisResult: null,
+  setDiagnosisResult: () => {},
   loading: false,
-  setLoading: (loading: boolean) => {},
+  setLoading: () => {},
 });
 
 export default function App() {
